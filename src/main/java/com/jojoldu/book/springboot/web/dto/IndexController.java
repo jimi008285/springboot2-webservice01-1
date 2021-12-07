@@ -1,5 +1,6 @@
 package com.jojoldu.book.springboot.web.dto;
 
+import com.jojoldu.book.springboot.config.auth.LoginUser;
 import com.jojoldu.book.springboot.config.auth.dto.SessionUser;
 import com.jojoldu.book.springboot.service.PostsService;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,12 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     private final PostsService postsService;
-    private final HttpSession httpSession;
+//    private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @LoginUser SessionUser user){
         model.addAttribute("posts", postsService.findAllDesc());
-        SessionUser user = (SessionUser)httpSession.getAttribute("user");
+//        SessionUser user = (SessionUser)httpSession.getAttribute("user");     /*  기존세션을 @LoginUser에서 가져옴  */
         if (user != null){
             model.addAttribute("userName", user.getName());
         }

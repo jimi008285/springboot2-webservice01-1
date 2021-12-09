@@ -13,9 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 // JUnit 연결자 역할
 @RunWith(SpringRunner.class)
@@ -34,19 +32,10 @@ public class HelloControllerTest {
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
 
-        mvc.perform(get("/hello"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(hello));
+        mvc.perform(get("/hello"))              // MockMvc통한 GET요청
+                .andExpect(status().isOk())                // header Status에 200, 400, 500 결과검증(OK = 200)
+                .andExpect(content().string(hello));       // 응답본문검증(Controller의 Return값이 hello인지 검증)
     }
-//    @WithMockUser(roles="USER")
-//    @Test
-//    public void hello가_리턴된다() throws Exception {
-//        String hello = "hello";
-//
-//        mvc.perform(get("/hello"))              // MockMvc통한 GET요청
-//                .andExpect(status().isOk())                // header Status에 200, 400, 500 결과검증(OK = 200)
-//                .andExpect(content().string(hello));       // 응답본문검증(Controller의 Return값이 hello인지 검증)
-//    }
 
     @WithMockUser(roles="USER")
     @Test
